@@ -1,0 +1,12 @@
+# For a GPU build of torch, install it first from https://pytorch.org/get-started/locally/
+torch
+open_clip_torch
+datasets
+scikit-learn
+scipy
+pandas
+pillow
+matplotlib
+plotly
+streamlit
+jupyter
