@@ -10,29 +10,54 @@ import pandas as pd
 import torch
 from PIL import Image
 
-from paths import EMBEDDINGS, IMAGES_DIR as IMAGES, METADATA_CSV as META
+from paths import EMBEDDINGS, IMAGES_DIR, METADATA_CSV
 
+MODEL = "ViT-B-32"
+PRETRAINED = "laion2b_s34b_b79k"
 BATCH = 64
 
 
-def main():
-    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
-    model, _, preprocess = open_clip.create_model_and_transforms("ViT-B-32", pretrained="laion2b_s34b_b79k")
-    model = model.to(device).eval()
+def pick_device():
+    if torch.cuda.is_available():
+        return "cuda"
+    return "mps" if torch.backends.mps.is_available() else "cpu"
 
-    files = pd.read_csv(META)["file"].tolist()
+
+def load_model(device):
+    model, _, preprocess = open_clip.create_model_and_transforms(MODEL, pretrained=PRETRAINED)
+    return model.to(device).eval(), preprocess
+
+
+def embed_images(images, model, preprocess, device):
+    """PIL images -> (n, 512) float32, unit length so a dot product is the cosine similarity."""
+    with torch.no_grad():
+        batch = torch.stack([preprocess(img.convert("RGB")) for img in images]).to(device)
+        emb = model.encode_image(batch)
+        return (emb / emb.norm(dim=-1, keepdim=True)).cpu().numpy().astype(np.float32)
+
+
+def embed_texts(texts, model, device):
+    """Text prompts -> (n, 512) float32, unit length, comparable with image embeddings."""
+    tokenizer = open_clip.get_tokenizer(MODEL)
+    with torch.no_grad():
+        emb = model.encode_text(tokenizer(texts).to(device))
+        return (emb / emb.norm(dim=-1, keepdim=True)).cpu().numpy().astype(np.float32)
+
+
+def main():
+    device = pick_device()
+    model, preprocess = load_model(device)
+
+    files = pd.read_csv(METADATA_CSV)["file"].tolist()
     print(f"Embedding {len(files):,} images on {device}...")
 
     out = []
-    with torch.no_grad():
-        for start in range(0, len(files), BATCH):
-            batch = torch.stack([preprocess(Image.open(IMAGES / f).convert("RGB"))
-                                 for f in files[start:start + BATCH]]).to(device)
-            emb = model.encode_image(batch)
-            out.append((emb / emb.norm(dim=-1, keepdim=True)).cpu().numpy())  # unit length: dot product = cosine similarity
-            print(f"  {min(start + BATCH, len(files)):,}/{len(files):,}", end="\r")
+    for start in range(0, len(files), BATCH):
+        images = [Image.open(IMAGES_DIR / f) for f in files[start:start + BATCH]]
+        out.append(embed_images(images, model, preprocess, device))
+        print(f"  {min(start + BATCH, len(files)):,}/{len(files):,}", end="\r")
 
-    emb = np.concatenate(out).astype(np.float32)
+    emb = np.concatenate(out)
     assert emb.shape[0] == len(files), "embedding count must match metadata rows"
     np.save(EMBEDDINGS, emb)
     print(f"\nSaved {emb.shape} to {EMBEDDINGS}")

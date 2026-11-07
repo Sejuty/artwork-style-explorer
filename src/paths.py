@@ -25,6 +25,7 @@ TSNE = DATA_DIR / "tsne.npy"                  # (N, 2) map coordinates for the a
 PCA_JSON = RESULTS_DIR / "pca.json"
 CLUSTERS_JSON = RESULTS_DIR / "clusters.json"
 PIXEL_BASELINE_JSON = RESULTS_DIR / "pixel_baseline.json"
+UPLOAD_ACCURACY_JSON = RESULTS_DIR / "upload_accuracy.json"   # predict.py --evaluate
 
 
 def ensure_dirs():

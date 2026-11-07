@@ -1,0 +1,17 @@
+{
+  "k": 15,
+  "style": {
+    "paintings": 9938,
+    "classes": 27,
+    "top1": 0.5795,
+    "top3": 0.8326,
+    "random_guess": 0.037
+  },
+  "genre": {
+    "paintings": 8582,
+    "classes": 10,
+    "top1": 0.8097,
+    "top3": 0.9617,
+    "random_guess": 0.1
+  }
+}

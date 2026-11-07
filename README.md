@@ -15,6 +15,11 @@ clusters. A dendrogram of the style averages rebuilds art history without being
 told any dates: Renaissance styles together, Baroque with Rococo, the Cubisms
 together, and the abstract movements on their own branch.
 
+The app also has an **upload** page: give it a painting (or a photo of one) and
+it guesses the subject and style from its 15 closest paintings. Tested
+leave-one-out on the collection, the first guess is right 81% of the time for
+subject and 58% for style (96% / 83% within the top three).
+
 Per-file reference: [`docs/FILES.md`](docs/FILES.md).
 
 ## Layout
@@ -52,7 +57,11 @@ Per-file reference: [`docs/FILES.md`](docs/FILES.md).
   tsne_map.py  2D map                -> data/tsne.npy
           |
           v
-  app.py   painting map + similar-painting search
+  app.py   painting map, upload, similar-painting search, clusters
+             ^
+             |
+  predict.py   k-nearest-neighbour guesses for an uploaded picture
+               (--evaluate -> results/upload_accuracy.json)
 ```
 
 ```
@@ -91,8 +100,10 @@ python src/cluster.py          # elbow, k-means (k=27), grading      (~1 min)
 python src/hierarchy.py        # dendrogram of the styles            (seconds)
 python src/tsne_map.py         # 2D map for the app                  (~20 s)
 python src/pixel_baseline.py   # same pipeline on raw pixels         (seconds)
+python src/predict.py --evaluate   # accuracy of the upload guesses  (~25 s)
 
-streamlit run src/app.py       # painting map + similar-painting search
+streamlit run src/app.py       # painting map, upload, similar-painting search, clusters
+python src/predict.py photo.jpg    # the upload guesses, from the terminal
 ```
 
 Options: `prepare_data.py --per-style N --max-rows N` (quick test:
@@ -121,6 +132,16 @@ and is flat beyond, so k = 27 is chosen for the one-cluster-per-style
 comparison rather than for score. `results/clusters.json` has the top three
 styles of every cluster and, for every style, how much of it lands in its main
 cluster.
+
+**Upload guesses.** `predict.py` embeds the picture with the same CLIP model
+(after shrinking it to a 224px thumbnail, like the collection) and lets its 15
+most similar paintings vote, weighted by 1 / cosine distance. Unlike the
+clustering, this uses the labels. Because the vote always returns an answer,
+CLIP is also asked whether the picture looks more like "a painting" or like "a
+screenshot / chart / document / photo"; below 30% the app warns that the
+guesses are loose. Fewer than 1% of the collection's own paintings fall under
+that line, while charts, documents, screenshots, noise and plain colours all
+scored under 16%. Uploaded pictures are processed in memory and never saved.
 
 **Raw-pixel baseline.** The same PCA → k-means → ARI on 32×32 grayscale pixels.
 It scores close to random, which is the argument for CLIP.

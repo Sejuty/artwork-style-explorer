@@ -12,7 +12,7 @@ from collections import Counter
 
 from datasets import load_dataset
 
-from paths import IMAGES_DIR as IMAGES, METADATA_CSV as META, ensure_dirs
+from paths import IMAGES_DIR, METADATA_CSV, ensure_dirs
 
 FIELDS = ["file", "style", "genre", "artist", "row"]  # row = position in the shuffled stream, used to resume
 
@@ -32,8 +32,8 @@ def main():
     # skip the rows already read; otherwise the first paintings would be saved again.
     kept = Counter()
     start_row = 0
-    if META.exists():
-        with META.open() as f:
+    if METADATA_CSV.exists():
+        with METADATA_CSV.open() as f:
             for row in csv.DictReader(f):
                 kept[row["style"]] += 1
                 start_row = int(row["row"]) + 1
@@ -48,8 +48,8 @@ def main():
         print(f"Resuming: {next_idx:,} images kept, skipping the first {start_row:,} rows...")
         ds = ds.skip(start_row)
 
-    new_file = not META.exists()
-    with META.open("a", newline="") as f:
+    new_file = not METADATA_CSV.exists()
+    with METADATA_CSV.open("a", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=FIELDS)
         if new_file:
             writer.writeheader()
@@ -64,7 +64,7 @@ def main():
             img = ex["image"].convert("RGB")
             img.thumbnail((args.size, args.size))  # keeps aspect ratio; CLIP's preprocessing crops later
             fname = f"{next_idx:06d}.jpg"
-            img.save(IMAGES / fname, quality=90)
+            img.save(IMAGES_DIR / fname, quality=90)
             writer.writerow({
                 "file": fname,
                 "style": style,
@@ -82,7 +82,7 @@ def main():
             if len(kept) == n_styles and all(c >= args.per_style for c in kept.values()):
                 break  # every style is full: no need to read the rest
 
-    print(f"\nDone. {next_idx:,} images in {IMAGES}")
+    print(f"\nDone. {next_idx:,} images in {IMAGES_DIR}")
     for style, c in sorted(kept.items(), key=lambda x: -x[1]):
         print(f"  {style:30s} {c}")
 
