@@ -1,5 +1,7 @@
 # Artwork Style Explorer
 
+**Live app: [artwork-style-explorer.streamlit.app](https://artwork-style-explorer.streamlit.app/)**
+
 Can a model rediscover art movements without being told what they are?
 This project clusters ~10k WikiArt paintings by how they look (CLIP embeddings → PCA → k-means), grades the clusters against the real style labels, and ships a Streamlit app to explore the result: an interactive style map, a page that guesses the subject and style of an uploaded picture, a cluster browser, and a plain-language walk through every chart.
 
@@ -16,8 +18,9 @@ told any dates: Renaissance styles together, Baroque with Rococo, the Cubisms
 together, and the abstract movements on their own branch.
 
 The mixed clusters are not random: most group paintings by **subject or
-medium** (portraits, nudes, pencil and ink drawings, buildings and streets)
-rather than by movement. The model finds real structure; it just isn't always
+medium** rather than by movement. Among the six most mixed clusters, one is 86%
+portraits, one 72% city views, one 71% religious scenes, one 61% nudes and one
+led by sketches and studies (39%). The model finds real structure; it just isn't always
 the structure art historians use, which is the main reason the ARI isn't higher.
 
 The app's **upload** page guesses the subject and style of a new picture from
@@ -72,7 +75,7 @@ Per-file reference: [`docs/FILES.md`](docs/FILES.md).
 ```
 .
 ├── src/            all Python scripts — see docs/FILES.md
-├── data/           images, metadata, embeddings (not in git, rebuilt by step 1–2)
+├── data/           images (not in git); metadata, embeddings, map and cluster files (in git, used by the app)
 ├── results/        small JSON summaries of each analysis step
 ├── docs/           FILES.md, figures/
 └── requirements.txt
@@ -120,8 +123,14 @@ has already read and carries on.
 
 ## The app
 
-`streamlit run src/app.py` opens it at http://localhost:8501. It needs `data/`
-(steps 1–2 and `cluster.py`, `tsne_map.py`) and reads the summaries in `results/`.
+Try it online at **[artwork-style-explorer.streamlit.app](https://artwork-style-explorer.streamlit.app/)**,
+or run it locally with `streamlit run src/app.py` (http://localhost:8501).
+
+The four small files the app needs are committed (`data/metadata.csv`,
+`data/embeddings.npy`, `data/tsne.npy`, `data/clusters.npy`, about 20 MB), so
+after [Setup](#setup) the app runs straight from a fresh clone. You only need
+the pipeline above to change the analysis. The app also reads the summaries in
+`results/` and the charts in `docs/figures/`.
 
 **The app doesn't show the paintings.** Many are still under copyright and the
 dataset gives no right to republish them (see [Dataset](#dataset)), so every
@@ -133,6 +142,24 @@ page works from the paintings' labels and CLIP codes instead.
 | **Upload a picture** | Drop in a painting or a photo of one. Shows your picture, the top three guesses for subject and style with their vote counts, and roughly where it would sit on the map. Warns when the picture doesn't look like a painting. The first upload takes a few seconds while CLIP loads. |
 | **Clusters** | Browse the k-means clusters, purest first: which styles each one contains and what its paintings show. |
 | **How it works** | Every chart from the analysis, plus tables of the cleanest and most mixed clusters, each with a plain-language note on what it shows, how to read it and what it tells us. |
+
+## Deployment
+
+The live app runs on [Streamlit Community Cloud](https://share.streamlit.io)
+(free), straight from this repository: branch `main`, main file `src/app.py`.
+Every push to `main` redeploys it.
+
+- `requirements.txt` installs **CPU-only PyTorch** from the PyTorch index; the
+  default build pulls in several GB of GPU libraries the server can't use.
+- Only the four small `data/` files are deployed; no painting images.
+- Memory: about 140 MB until someone uploads a picture, then about 1.5 GB once
+  CLIP is loaded. The first upload after a restart takes about a minute while
+  the model downloads.
+- The server uses newer versions than a typical local setup (Python 3.12,
+  pandas 3, which makes the arrays it returns read-only), so avoid editing
+  pandas output in place.
+- Free apps go to sleep after a while without visitors; the next visit shows a
+  wake-up button and the app is back in about a minute.
 
 ## What each stage does
 
@@ -185,9 +212,8 @@ The app's **How it works** page shows all of these with plain-language explanati
 [`huggan/wikiart`](https://huggingface.co/datasets/huggan/wikiart): 81,444 paintings, 27 styles, 11 genres, 129 artists.
 - The 72 shard files are **not shuffled** (the early ones are missing many styles), so `prepare_data.py` shuffles shard order and caps each style.
 - Styles are very unbalanced (Impressionism ≈ 13k paintings, some styles only a few hundred). The cap keeps the clusters from all becoming Impressionism. Four styles have fewer than 400 in the whole dataset: New Realism 314, Synthetic Cubism 216, Analytical Cubism 110, Action Painting 98.
-- License: **unknown**, "Data files © Original Authors". The dataset card limits it to **non-commercial research** and asks users to follow [WikiArt.org's terms](https://www.wikiart.org/en/terms-of-use), which give visitors no right to republish the images. Roughly a quarter of this sample (Pop Art, Abstract Expressionism, Minimalism and other mid/late 20th-century styles) is very likely still under copyright. That's why `data/` isn't in git and the app shows paintings as text by default.
+- License: **unknown**, "Data files © Original Authors". The dataset card limits it to **non-commercial research** and asks users to follow [WikiArt.org's terms](https://www.wikiart.org/en/terms-of-use), which give visitors no right to republish the images. Roughly a quarter of this sample (Pop Art, Abstract Expressionism, Minimalism and other mid/late 20th-century styles) is very likely still under copyright. That's why the images aren't in git and the app shows no paintings.
 
 ## Stretch goals
 - NMF on the embeddings: interpretable "visual parts" (course ch. 4)
 - Text search with CLIP: type "stormy sea at night" and get matching paintings
-- Deploy the app (Streamlit Community Cloud / Hugging Face Spaces)
