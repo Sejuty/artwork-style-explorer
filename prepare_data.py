@@ -16,7 +16,7 @@ from datasets import load_dataset
 DATA = Path(__file__).parent / "data"
 IMAGES = DATA / "images"
 META = DATA / "metadata.csv"
-FIELDS = ["file", "style", "genre", "artist"]
+FIELDS = ["file", "style", "genre", "artist", "row"]  # row = position in the shuffled stream, used to resume
 
 
 def main():
@@ -30,11 +30,15 @@ def main():
     IMAGES.mkdir(parents=True, exist_ok=True)
 
     # Resume: count what earlier runs already kept, so a restart doesn't start over.
+    # The shuffled stream comes back in the same order every run (fixed seed), so we also
+    # skip the rows already read; otherwise the first paintings would be saved again.
     kept = Counter()
+    start_row = 0
     if META.exists():
         with META.open() as f:
             for row in csv.DictReader(f):
                 kept[row["style"]] += 1
+                start_row = int(row["row"]) + 1
     next_idx = sum(kept.values())
 
     ds = load_dataset("huggan/wikiart", split="train", streaming=True)
@@ -42,6 +46,9 @@ def main():
     n_styles = ds.features["style"].num_classes
     # The 72 shard files are sorted (early ones lack many styles), so shuffle shard order + a row buffer.
     ds = ds.shuffle(seed=args.seed, buffer_size=1000)
+    if start_row:
+        print(f"Resuming: {next_idx:,} images kept, skipping the first {start_row:,} rows...")
+        ds = ds.skip(start_row)
 
     new_file = not META.exists()
     with META.open("a", newline="") as f:
@@ -49,7 +56,7 @@ def main():
         if new_file:
             writer.writeheader()
 
-        for i, ex in enumerate(ds):
+        for i, ex in enumerate(ds, start=start_row):
             if args.max_rows and i >= args.max_rows:
                 break
             style = names["style"](ex["style"])
@@ -65,6 +72,7 @@ def main():
                 "style": style,
                 "genre": names["genre"](ex["genre"]),
                 "artist": names["artist"](ex["artist"]),
+                "row": i,
             })
             f.flush()  # so an interrupted run can resume cleanly
             kept[style] += 1
