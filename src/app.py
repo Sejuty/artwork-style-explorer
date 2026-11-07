@@ -1,16 +1,16 @@
 """Streamlit app: interactive painting map + 'find similar paintings'.
 
 Needs data/metadata.csv, data/embeddings.npy (from the scripts) and
-data/tsne.npy, data/clusters.npy (saved at the end of the notebook).
+data/tsne.npy (tsne_map.py) and data/clusters.npy (cluster.py).
 
-    streamlit run app.py
+    streamlit run src/app.py
 """
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from prepare_data import DATA, IMAGES, META
+from paths import CLUSTERS, EMBEDDINGS, IMAGES_DIR as IMAGES, METADATA_CSV as META, TSNE
 
 st.set_page_config(page_title="Artwork Style Explorer", layout="wide")
 
@@ -18,17 +18,17 @@ st.set_page_config(page_title="Artwork Style Explorer", layout="wide")
 @st.cache_data
 def load():
     df = pd.read_csv(META)
-    emb = np.load(DATA / "embeddings.npy")
-    xy = np.load(DATA / "tsne.npy")
+    emb = np.load(EMBEDDINGS)
+    xy = np.load(TSNE)
     df["x"], df["y"] = xy[:, 0], xy[:, 1]
-    df["cluster"] = np.load(DATA / "clusters.npy").astype(str)
+    df["cluster"] = np.load(CLUSTERS).astype(str)
     return df, emb
 
 
 try:
     df, emb = load()
 except FileNotFoundError as e:
-    st.error(f"Missing {e.filename}. Run prepare_data.py, embed.py, then the notebook first.")
+    st.error(f"Missing {e.filename}. Run the steps in the README first.")
     st.stop()
 
 st.title("Artwork Style Explorer")

@@ -1,0 +1,13 @@
+{
+  "input_dims": 512,
+  "target_variance": 0.9,
+  "n_components": 183,
+  "variance_kept": 0.9001,
+  "components_for": {
+    "50%": 23,
+    "80%": 104,
+    "90%": 183,
+    "95%": 259,
+    "99%": 394
+  }
+}

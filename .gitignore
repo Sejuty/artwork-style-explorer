@@ -4,3 +4,5 @@ venv/
 __pycache__/
 .ipynb_checkpoints/
 *.log
+# painting thumbnails are copyrighted: keep the grids local
+docs/figures/paintings_*

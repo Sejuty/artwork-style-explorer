@@ -2,7 +2,7 @@
 
 Output: data/embeddings.npy, shape (N, 512), with rows in the same order as data/metadata.csv.
 
-    python embed.py
+    python src/embed.py
 """
 import numpy as np
 import open_clip
@@ -10,7 +10,7 @@ import pandas as pd
 import torch
 from PIL import Image
 
-from prepare_data import DATA, IMAGES, META
+from paths import EMBEDDINGS, IMAGES_DIR as IMAGES, METADATA_CSV as META
 
 BATCH = 64
 
@@ -34,8 +34,8 @@ def main():
 
     emb = np.concatenate(out).astype(np.float32)
     assert emb.shape[0] == len(files), "embedding count must match metadata rows"
-    np.save(DATA / "embeddings.npy", emb)
-    print(f"\nSaved {emb.shape} to {DATA / 'embeddings.npy'}")
+    np.save(EMBEDDINGS, emb)
+    print(f"\nSaved {emb.shape} to {EMBEDDINGS}")
 
 
 if __name__ == "__main__":

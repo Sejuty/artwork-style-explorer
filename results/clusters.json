@@ -1,0 +1,646 @@
+{
+  "k": 27,
+  "n_paintings": 9938,
+  "ari": 0.1892,
+  "nmi": 0.3978,
+  "elbow": [
+    {
+      "k": 5,
+      "inertia": 4563.7373046875,
+      "ari": 0.1164166909348923
+    },
+    {
+      "k": 10,
+      "inertia": 4219.736328125,
+      "ari": 0.1678082032411808
+    },
+    {
+      "k": 15,
+      "inertia": 4048.6884765625,
+      "ari": 0.19999977129303803
+    },
+    {
+      "k": 20,
+      "inertia": 3932.162109375,
+      "ari": 0.19056466795774074
+    },
+    {
+      "k": 25,
+      "inertia": 3837.8916015625,
+      "ari": 0.19861725238624087
+    },
+    {
+      "k": 30,
+      "inertia": 3760.964111328125,
+      "ari": 0.18685138364293347
+    },
+    {
+      "k": 35,
+      "inertia": 3706.353515625,
+      "ari": 0.18448130167498608
+    },
+    {
+      "k": 40,
+      "inertia": 3653.1962890625,
+      "ari": 0.18307687393633973
+    }
+  ],
+  "per_style": {
+    "Analytical_Cubism": {
+      "paintings": 110,
+      "best_cluster": 21,
+      "share_in_best_cluster": 0.945
+    },
+    "Synthetic_Cubism": {
+      "paintings": 216,
+      "best_cluster": 21,
+      "share_in_best_cluster": 0.898
+    },
+    "Ukiyo_e": {
+      "paintings": 400,
+      "best_cluster": 13,
+      "share_in_best_cluster": 0.877
+    },
+    "Action_painting": {
+      "paintings": 98,
+      "best_cluster": 1,
+      "share_in_best_cluster": 0.571
+    },
+    "Pop_Art": {
+      "paintings": 400,
+      "best_cluster": 15,
+      "share_in_best_cluster": 0.51
+    },
+    "Cubism": {
+      "paintings": 400,
+      "best_cluster": 21,
+      "share_in_best_cluster": 0.497
+    },
+    "Abstract_Expressionism": {
+      "paintings": 400,
+      "best_cluster": 1,
+      "share_in_best_cluster": 0.48
+    },
+    "Color_Field_Painting": {
+      "paintings": 400,
+      "best_cluster": 6,
+      "share_in_best_cluster": 0.472
+    },
+    "Minimalism": {
+      "paintings": 400,
+      "best_cluster": 12,
+      "share_in_best_cluster": 0.435
+    },
+    "Early_Renaissance": {
+      "paintings": 400,
+      "best_cluster": 10,
+      "share_in_best_cluster": 0.427
+    },
+    "Impressionism": {
+      "paintings": 400,
+      "best_cluster": 0,
+      "share_in_best_cluster": 0.36
+    },
+    "Art_Nouveau": {
+      "paintings": 400,
+      "best_cluster": 7,
+      "share_in_best_cluster": 0.357
+    },
+    "Pointillism": {
+      "paintings": 400,
+      "best_cluster": 2,
+      "share_in_best_cluster": 0.355
+    },
+    "Contemporary_Realism": {
+      "paintings": 400,
+      "best_cluster": 25,
+      "share_in_best_cluster": 0.352
+    },
+    "Baroque": {
+      "paintings": 400,
+      "best_cluster": 9,
+      "share_in_best_cluster": 0.35
+    },
+    "Rococo": {
+      "paintings": 400,
+      "best_cluster": 26,
+      "share_in_best_cluster": 0.307
+    },
+    "Mannerism_Late_Renaissance": {
+      "paintings": 400,
+      "best_cluster": 19,
+      "share_in_best_cluster": 0.29
+    },
+    "Naive_Art_Primitivism": {
+      "paintings": 400,
+      "best_cluster": 4,
+      "share_in_best_cluster": 0.27
+    },
+    "Realism": {
+      "paintings": 400,
+      "best_cluster": 17,
+      "share_in_best_cluster": 0.27
+    },
+    "Romanticism": {
+      "paintings": 400,
+      "best_cluster": 17,
+      "share_in_best_cluster": 0.25
+    },
+    "Post_Impressionism": {
+      "paintings": 400,
+      "best_cluster": 16,
+      "share_in_best_cluster": 0.23
+    },
+    "Northern_Renaissance": {
+      "paintings": 400,
+      "best_cluster": 10,
+      "share_in_best_cluster": 0.225
+    },
+    "Expressionism": {
+      "paintings": 400,
+      "best_cluster": 4,
+      "share_in_best_cluster": 0.22
+    },
+    "Symbolism": {
+      "paintings": 400,
+      "best_cluster": 7,
+      "share_in_best_cluster": 0.2
+    },
+    "High_Renaissance": {
+      "paintings": 400,
+      "best_cluster": 10,
+      "share_in_best_cluster": 0.198
+    },
+    "New_Realism": {
+      "paintings": 314,
+      "best_cluster": 14,
+      "share_in_best_cluster": 0.194
+    },
+    "Fauvism": {
+      "paintings": 400,
+      "best_cluster": 4,
+      "share_in_best_cluster": 0.16
+    }
+  },
+  "clusters": {
+    "0": {
+      "size": 533,
+      "top_styles": [
+        {
+          "style": "Impressionism",
+          "share": 0.27
+        },
+        {
+          "style": "Post_Impressionism",
+          "share": 0.107
+        },
+        {
+          "style": "Realism",
+          "share": 0.107
+        }
+      ]
+    },
+    "1": {
+      "size": 432,
+      "top_styles": [
+        {
+          "style": "Abstract_Expressionism",
+          "share": 0.444
+        },
+        {
+          "style": "Action_painting",
+          "share": 0.13
+        },
+        {
+          "style": "Color_Field_Painting",
+          "share": 0.118
+        }
+      ]
+    },
+    "2": {
+      "size": 301,
+      "top_styles": [
+        {
+          "style": "Pointillism",
+          "share": 0.472
+        },
+        {
+          "style": "Impressionism",
+          "share": 0.113
+        },
+        {
+          "style": "Post_Impressionism",
+          "share": 0.113
+        }
+      ]
+    },
+    "3": {
+      "size": 358,
+      "top_styles": [
+        {
+          "style": "High_Renaissance",
+          "share": 0.109
+        },
+        {
+          "style": "Symbolism",
+          "share": 0.109
+        },
+        {
+          "style": "Art_Nouveau",
+          "share": 0.106
+        }
+      ]
+    },
+    "4": {
+      "size": 472,
+      "top_styles": [
+        {
+          "style": "Naive_Art_Primitivism",
+          "share": 0.229
+        },
+        {
+          "style": "Expressionism",
+          "share": 0.186
+        },
+        {
+          "style": "Fauvism",
+          "share": 0.136
+        }
+      ]
+    },
+    "5": {
+      "size": 352,
+      "top_styles": [
+        {
+          "style": "Mannerism_Late_Renaissance",
+          "share": 0.205
+        },
+        {
+          "style": "Northern_Renaissance",
+          "share": 0.199
+        },
+        {
+          "style": "Early_Renaissance",
+          "share": 0.156
+        }
+      ]
+    },
+    "6": {
+      "size": 508,
+      "top_styles": [
+        {
+          "style": "Color_Field_Painting",
+          "share": 0.372
+        },
+        {
+          "style": "Abstract_Expressionism",
+          "share": 0.272
+        },
+        {
+          "style": "Minimalism",
+          "share": 0.12
+        }
+      ]
+    },
+    "7": {
+      "size": 442,
+      "top_styles": [
+        {
+          "style": "Art_Nouveau",
+          "share": 0.324
+        },
+        {
+          "style": "Symbolism",
+          "share": 0.181
+        },
+        {
+          "style": "Naive_Art_Primitivism",
+          "share": 0.09
+        }
+      ]
+    },
+    "8": {
+      "size": 297,
+      "top_styles": [
+        {
+          "style": "Mannerism_Late_Renaissance",
+          "share": 0.276
+        },
+        {
+          "style": "High_Renaissance",
+          "share": 0.162
+        },
+        {
+          "style": "Northern_Renaissance",
+          "share": 0.141
+        }
+      ]
+    },
+    "9": {
+      "size": 370,
+      "top_styles": [
+        {
+          "style": "Baroque",
+          "share": 0.378
+        },
+        {
+          "style": "Rococo",
+          "share": 0.176
+        },
+        {
+          "style": "Realism",
+          "share": 0.151
+        }
+      ]
+    },
+    "10": {
+      "size": 396,
+      "top_styles": [
+        {
+          "style": "Early_Renaissance",
+          "share": 0.432
+        },
+        {
+          "style": "Northern_Renaissance",
+          "share": 0.227
+        },
+        {
+          "style": "High_Renaissance",
+          "share": 0.199
+        }
+      ]
+    },
+    "11": {
+      "size": 392,
+      "top_styles": [
+        {
+          "style": "Expressionism",
+          "share": 0.156
+        },
+        {
+          "style": "Fauvism",
+          "share": 0.128
+        },
+        {
+          "style": "Contemporary_Realism",
+          "share": 0.125
+        }
+      ]
+    },
+    "12": {
+      "size": 359,
+      "top_styles": [
+        {
+          "style": "Minimalism",
+          "share": 0.485
+        },
+        {
+          "style": "Color_Field_Painting",
+          "share": 0.39
+        },
+        {
+          "style": "Abstract_Expressionism",
+          "share": 0.05
+        }
+      ]
+    },
+    "13": {
+      "size": 354,
+      "top_styles": [
+        {
+          "style": "Ukiyo_e",
+          "share": 0.992
+        },
+        {
+          "style": "Symbolism",
+          "share": 0.003
+        },
+        {
+          "style": "Post_Impressionism",
+          "share": 0.003
+        }
+      ]
+    },
+    "14": {
+      "size": 283,
+      "top_styles": [
+        {
+          "style": "New_Realism",
+          "share": 0.216
+        },
+        {
+          "style": "Post_Impressionism",
+          "share": 0.124
+        },
+        {
+          "style": "Impressionism",
+          "share": 0.099
+        }
+      ]
+    },
+    "15": {
+      "size": 387,
+      "top_styles": [
+        {
+          "style": "Pop_Art",
+          "share": 0.527
+        },
+        {
+          "style": "Naive_Art_Primitivism",
+          "share": 0.093
+        },
+        {
+          "style": "Art_Nouveau",
+          "share": 0.065
+        }
+      ]
+    },
+    "16": {
+      "size": 414,
+      "top_styles": [
+        {
+          "style": "Pointillism",
+          "share": 0.278
+        },
+        {
+          "style": "Post_Impressionism",
+          "share": 0.222
+        },
+        {
+          "style": "Impressionism",
+          "share": 0.152
+        }
+      ]
+    },
+    "17": {
+      "size": 383,
+      "top_styles": [
+        {
+          "style": "Realism",
+          "share": 0.282
+        },
+        {
+          "style": "Romanticism",
+          "share": 0.261
+        },
+        {
+          "style": "Baroque",
+          "share": 0.102
+        }
+      ]
+    },
+    "18": {
+      "size": 203,
+      "top_styles": [
+        {
+          "style": "Fauvism",
+          "share": 0.296
+        },
+        {
+          "style": "Post_Impressionism",
+          "share": 0.128
+        },
+        {
+          "style": "Contemporary_Realism",
+          "share": 0.118
+        }
+      ]
+    },
+    "19": {
+      "size": 388,
+      "top_styles": [
+        {
+          "style": "Mannerism_Late_Renaissance",
+          "share": 0.299
+        },
+        {
+          "style": "High_Renaissance",
+          "share": 0.204
+        },
+        {
+          "style": "Baroque",
+          "share": 0.152
+        }
+      ]
+    },
+    "20": {
+      "size": 157,
+      "top_styles": [
+        {
+          "style": "Rococo",
+          "share": 0.618
+        },
+        {
+          "style": "Romanticism",
+          "share": 0.248
+        },
+        {
+          "style": "Baroque",
+          "share": 0.076
+        }
+      ]
+    },
+    "21": {
+      "size": 587,
+      "top_styles": [
+        {
+          "style": "Cubism",
+          "share": 0.339
+        },
+        {
+          "style": "Synthetic_Cubism",
+          "share": 0.33
+        },
+        {
+          "style": "Analytical_Cubism",
+          "share": 0.177
+        }
+      ]
+    },
+    "22": {
+      "size": 186,
+      "top_styles": [
+        {
+          "style": "High_Renaissance",
+          "share": 0.29
+        },
+        {
+          "style": "Northern_Renaissance",
+          "share": 0.274
+        },
+        {
+          "style": "Early_Renaissance",
+          "share": 0.242
+        }
+      ]
+    },
+    "23": {
+      "size": 239,
+      "top_styles": [
+        {
+          "style": "Minimalism",
+          "share": 0.653
+        },
+        {
+          "style": "Pop_Art",
+          "share": 0.172
+        },
+        {
+          "style": "Color_Field_Painting",
+          "share": 0.05
+        }
+      ]
+    },
+    "24": {
+      "size": 308,
+      "top_styles": [
+        {
+          "style": "Expressionism",
+          "share": 0.175
+        },
+        {
+          "style": "Contemporary_Realism",
+          "share": 0.114
+        },
+        {
+          "style": "Fauvism",
+          "share": 0.101
+        }
+      ]
+    },
+    "25": {
+      "size": 452,
+      "top_styles": [
+        {
+          "style": "Contemporary_Realism",
+          "share": 0.312
+        },
+        {
+          "style": "New_Realism",
+          "share": 0.113
+        },
+        {
+          "style": "Symbolism",
+          "share": 0.08
+        }
+      ]
+    },
+    "26": {
+      "size": 385,
+      "top_styles": [
+        {
+          "style": "Rococo",
+          "share": 0.319
+        },
+        {
+          "style": "Baroque",
+          "share": 0.119
+        },
+        {
+          "style": "Mannerism_Late_Renaissance",
+          "share": 0.101
+        }
+      ]
+    }
+  }
+}

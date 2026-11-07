@@ -9,4 +9,3 @@ pillow
 matplotlib
 plotly
 streamlit
-jupyter

@@ -3,19 +3,17 @@
 Nothing big is stored: the 34 GB dataset is read once, and only small JPEGs are saved.
 Output: data/images/<idx>.jpg and data/metadata.csv
 
-    python prepare_data.py                      # ~10k images, 400 per style
-    python prepare_data.py --per-style 5 --max-rows 2000   # quick smoke test
+    python src/prepare_data.py                      # ~10k images, 400 per style
+    python src/prepare_data.py --per-style 5 --max-rows 2000   # quick smoke test
 """
 import argparse
 import csv
 from collections import Counter
-from pathlib import Path
 
 from datasets import load_dataset
 
-DATA = Path(__file__).parent / "data"
-IMAGES = DATA / "images"
-META = DATA / "metadata.csv"
+from paths import IMAGES_DIR as IMAGES, METADATA_CSV as META, ensure_dirs
+
 FIELDS = ["file", "style", "genre", "artist", "row"]  # row = position in the shuffled stream, used to resume
 
 
@@ -27,7 +25,7 @@ def main():
     p.add_argument("--seed", type=int, default=42)
     args = p.parse_args()
 
-    IMAGES.mkdir(parents=True, exist_ok=True)
+    ensure_dirs()
 
     # Resume: count what earlier runs already kept, so a restart doesn't start over.
     # The shuffled stream comes back in the same order every run (fixed seed), so we also
