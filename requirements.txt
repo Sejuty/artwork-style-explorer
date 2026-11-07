@@ -1,4 +1,6 @@
-# For a GPU build of torch, install it first from https://pytorch.org/get-started/locally/
+# CPU-only PyTorch (much smaller; this is what Streamlit Community Cloud uses).
+# For an NVIDIA GPU, install torch first from https://pytorch.org/get-started/locally/
+--extra-index-url https://download.pytorch.org/whl/cpu
 torch
 open_clip_torch
 datasets

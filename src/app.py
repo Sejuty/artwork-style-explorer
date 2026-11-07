@@ -372,7 +372,7 @@ elif page == UPLOAD:
         st.caption(f"Tested on the collection, the first guess is right {acc['genre']['top1']:.0%} of the "
                    f"time for subject and {acc['style']['top1']:.0%} for style; the right answer is in the "
                    f"top three {acc['genre']['top3']:.0%} and {acc['style']['top3']:.0%} of the time. "
-                   "Your picture is only used on this computer and isn't saved.")
+                   "Your picture is processed in memory and never saved.")
     file = st.file_uploader("Upload a picture", type=["jpg", "jpeg", "png", "webp"],
                             label_visibility="collapsed")
     if file is None:

@@ -1,4 +1,10 @@
-data/
+# data/ is rebuilt by the scripts; only the small files the app needs are committed
+# (no images: many paintings are still under copyright)
+data/*
+!data/metadata.csv
+!data/embeddings.npy
+!data/tsne.npy
+!data/clusters.npy
 venv/
 .venv/
 __pycache__/
