@@ -15,7 +15,7 @@ All scripts live in `src/` and run from anywhere: `python src/<name>.py`.
 | `tsne_map.py` | `data/pca.npy`, `data/clusters.npy` | `data/tsne.npy`, `tsne.png` | 2D t-SNE map, coloured by cluster and by style. |
 | `pixel_baseline.py` | `data/images`, `results/pca.json`, `results/clusters.json` | `results/pixel_baseline.json` | Same PCA → k-means → ARI on 32×32 grayscale pixels, for comparison with CLIP. |
 | `predict.py` | `data/embeddings.npy`, `data/metadata.csv` | `results/upload_accuracy.json` (with `--evaluate`) | Guesses genre and style for a new picture: weighted vote of its 15 nearest paintings, plus a CLIP "is this a painting?" check. `--evaluate` measures accuracy leave-one-out on the collection. |
-| `app.py` | `data/*.npy`, `data/metadata.csv`, `results/*.json` | — | Streamlit app: t-SNE painting map (click a dot to open it), upload a picture, similar-painting search, cluster browser, and an explanation page. |
+| `app.py` | `data/*.npy`, `data/metadata.csv`, `results/*.json` | — | Streamlit app: t-SNE style map (highlight a style to see its piles and nearest styles), upload a picture, cluster browser, and an explanation page. Shows no painting images (copyright). |
 
 Figures go to `docs/figures/`. The `paintings_*.png` grids contain the
 copyrighted thumbnails and are git-ignored; the charts are committed.
