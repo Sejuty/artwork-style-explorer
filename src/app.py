@@ -63,7 +63,7 @@ def load():
     df["artist_name"] = df["artist"].map(nice).replace("Unknown", "Unknown artist")
     # How alike two styles look: cosine similarity of their average CLIP codes.
     means = pd.DataFrame(emb).groupby(df["style_name"]).mean().to_numpy()
-    means /= np.linalg.norm(means, axis=1, keepdims=True)
+    means = means / np.linalg.norm(means, axis=1, keepdims=True)  # not in place: pandas 3 arrays are read-only
     names = sorted(df["style_name"].unique())
     style_sim = pd.DataFrame(means @ means.T, index=names, columns=names)
     return df, emb, style_sim
